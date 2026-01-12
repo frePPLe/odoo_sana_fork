@@ -530,17 +530,6 @@ class exporter(object):
 
             # Read the resource calendar association
             calendar_resource = {}
-            for i in self.generator.getData(
-                "mrp.workcenter",
-                search=[("resource_calendar_id", "!=", False)],
-                fields=[
-                    "resource_id",
-                    "resource_calendar_id",
-                ],
-            ):
-                if i["resource_calendar_id"][0] not in calendar_resource:
-                    calendar_resource[i["resource_calendar_id"][0]] = set()
-                calendar_resource[i["resource_calendar_id"][0]].add(i["resource_id"][0])
 
             # Read from the attendance/leaves which resource has specific entries
             self.resources_with_specific_calendars = {}
