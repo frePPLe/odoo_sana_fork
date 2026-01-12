@@ -13,7 +13,6 @@
           <page string="FrePPLe">
             <group>
               <field name="calendar"/>
-              <field name="manufacturing_warehouse"/>
               <field name="webtoken_key"/>
               <field name="frepple_server"/>
               <field name="disclose_stack_trace"/>
@@ -23,22 +22,8 @@
       </field>
     </record>
 
-    <!-- Complete frePPLe UI in manufacturing menu. -->
-    <record id="action_frepple_web" model="ir.actions.client">
-      <field name="name">frePPLe user interface</field>
-      <field name="tag">frepple.homepage</field>
-    </record>
-    <menuitem id="menu_frepple_web" name="Advanced planning - frePPLe" parent="mrp.menu_mrp_root" sequence="100" action="action_frepple_web" groups="frepple_user" />
-
     <!-- Complete frePPLe UI in purchasing menu. -->
     <menuitem id="menu_frepple_web_procurement" name="Advanced planning - frePPLe" parent="purchase.menu_purchase_root" sequence="110" action="action_frepple_web" groups="frepple_user" />
-
-    <!-- frePPle plan editor in manufacturing menu. -->
-    <record id="action_frepple_planeditor" model="ir.actions.client">
-      <field name="name">Plan editor - frePPLe</field>
-      <field name="tag">frepple.planeditor</field>
-    </record>
-    <menuitem id="menu_frepple_planeditor" name="Plan editor - frePPLe" parent="mrp.menu_mrp_manufacturing" sequence="30" action="action_frepple_planeditor" groups="frepple_user" />
 
     <!-- frePPle forecast editor in sales menu. -->
     <record id="action_frepple_forecast_editor" model="ir.actions.client">

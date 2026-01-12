@@ -28,12 +28,6 @@ from odoo import fields, models
 class ResConfigSettings(models.TransientModel):
     _inherit = "res.config.settings"
 
-    manufacturing_warehouse = fields.Many2one(
-        "stock.warehouse",
-        "Manufacturing warehouse",
-        related="company_id.manufacturing_warehouse",
-        readonly=False,
-    )
     calendar = fields.Many2one(
         "resource.calendar",
         "Calendar",
