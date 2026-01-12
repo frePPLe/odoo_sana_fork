@@ -351,16 +351,12 @@ class exporter(object):
 
             self.respect_reservations = i["respect_reservations"]
 
-            self.mfg_location = None
-
         if not self.company_id:
             logger.warning("Can't find company '%s'" % self.company)
             self.company_id = None
             self.security_lead = 0
             self.po_lead = 0
             self.manufacturing_lead = 0
-            self.calendar = None
-            self.mfg_location = self.company
 
     def load_uom(self):
         """
@@ -777,21 +773,14 @@ class exporter(object):
                 yield "<!-- warehouses -->\n"
                 yield "<locations>\n"
                 first = False
-            yield '<location name=%s description=%s subcategory="%s">%s</location>\n' % (
+            yield '<location name=%s description=%s subcategory="%s"></location>\n' % (
                 quoteattr(i["code"]),
                 quoteattr(i["name"]),
                 i["id"],
-                (
-                    ("<available name=%s/>" % quoteattr(self.calendar))
-                    if self.calendar
-                    else ""
-                ),
             )
             self.warehouses[i["id"]] = i["code"] or i["name"]
         if not first:
             yield "</locations>\n"
-        if self.mfg_location and self.mfg_location in self.warehouses:
-            self.mfg_location = self.warehouses[self.mfg_location]
 
         # Populate a mapping location-to-warehouse name for later lookups
         loc_ids = [
@@ -1691,7 +1680,7 @@ class exporter(object):
                 j = i.order_id
                 if not item:
                     continue
-                location = self.mfg_location
+                location = "SANA Services AG - Adligenswil"
                 if location and item and i.product_qty > i.qty_received:
                     start = j.date_order
                     if not isinstance(start, datetime):

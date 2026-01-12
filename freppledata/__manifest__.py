@@ -7,12 +7,8 @@
     "license": "Other OSI approved licence",
     "category": "Uncategorized",
     "version": "16.0.0",
-    "depends": ["mrp_subcontracting", "sale_stock"],
+    "depends": ["sale_stock"],
     "data": [
-        "data/product.template.csv",
-        "data/mrp.workcenter.csv",
-        "data/mrp.bom.csv",
-        "data/mrp.production.xml",
         "data/sale.order.xml",
         "data/purchase.order.xml",
         "data/stock.warehouse.orderpoint.csv",

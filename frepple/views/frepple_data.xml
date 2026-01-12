@@ -23,6 +23,10 @@
     </record>
 
     <!-- Complete frePPLe UI in purchasing menu. -->
+    <record id="action_frepple_web" model="ir.actions.client">
+      <field name="name">frePPLe user interface</field>
+      <field name="tag">frepple.homepage</field>
+    </record>
     <menuitem id="menu_frepple_web_procurement" name="Advanced planning - frePPLe" parent="purchase.menu_purchase_root" sequence="110" action="action_frepple_web" groups="frepple_user" />
 
     <!-- frePPle forecast editor in sales menu. -->
