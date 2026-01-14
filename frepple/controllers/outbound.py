@@ -1350,11 +1350,7 @@ class exporter(object):
                 else None
             )
             j = so[i["order_id"][0]]
-            location = (
-                self.warehouses.get(j["warehouse_id"][0], None)
-                if j["warehouse_id"]
-                else None
-            )
+            location = "SANA"
             customer = (
                 self.map_customers.get(j["partner_id"][0], None)
                 if j["partner_id"]
