@@ -1628,8 +1628,9 @@ class exporter(object):
                         batch = None
 
                     location = (
-                        "SANA",
-                    )  # self.map_locations.get(mv.location_dest_id.id, None)
+                        "SANA"  # self.map_locations.get(mv.location_dest_id.id, None)
+                    )
+
                     if not location:
                         continue
                     start = j.date_order
