@@ -1627,7 +1627,9 @@ class exporter(object):
                     else:
                         batch = None
 
-                    location = self.map_locations.get(mv.location_dest_id.id, None)
+                    location = (
+                        "SANA",
+                    )  # self.map_locations.get(mv.location_dest_id.id, None)
                     if not location:
                         continue
                     start = j.date_order
@@ -1680,7 +1682,7 @@ class exporter(object):
                 j = i.order_id
                 if not item:
                     continue
-                location = "SANA Services AG - Adligenswil"
+                location = "SANA"
                 if location and item and i.product_qty > i.qty_received:
                     start = j.date_order
                     if not isinstance(start, datetime):
