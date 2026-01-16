@@ -1257,15 +1257,21 @@ class exporter(object):
         """
         # Get all sales order lines
         search = (
-            [("product_id", "!=", False)]
+            [
+                ("product_id", "!=", False),
+                ("order_id.state", "not in", ["draft", "sent"]),
+                ("order_id.partner_id.id", "!=", 4887),
+            ]
             if self.delta >= 999
             else [
                 ("product_id", "!=", False),
+                ("order_id.state", "not in", ["draft", "sent"]),
                 (
                     "write_date",
                     ">=",
                     datetime.now() - timedelta(days=self.delta),
                 ),
+                ("order_id.partner_id.id", "!=", 4887),
             ]
         )
         so_line = self.generator.getData(
