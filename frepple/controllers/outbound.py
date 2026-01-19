@@ -1255,12 +1255,48 @@ class exporter(object):
         stock.warehouse.name -> demand->location
         (if sale.order.picking_policy = 'one' then same as demand.quantity else 1) -> demand.minshipment
         """
+
+        # sales orders to exclude:
+        so_to_exclude = [
+            "S03050",
+            "S03294",
+            "S03162",
+            "S03100",
+            "S03339",
+            "S03598",
+            "S03172",
+            "S03319",
+            "S03784",
+            "S03692",
+            "S03201",
+            "S03500",
+            "S03224",
+            "S03427",
+            "S03670",
+            "S03204",
+            "S03186",
+            "S03691",
+            "S03349",
+            "S03134",
+            "S03089",
+            "S03463",
+            "S03219",
+            "S03415",
+            "S03223",
+            "S03270",
+            "S03506",
+            "S03827",
+            "S03822",
+            "S05203",
+        ]
+
         # Get all sales order lines
         search = (
             [
                 ("product_id", "!=", False),
                 ("order_id.state", "not in", ["draft", "sent"]),
                 ("order_id.partner_id.id", "!=", 4887),
+                ("order_id.name", "not in", so_to_exclude),
             ]
             if self.delta >= 999
             else [
@@ -1272,6 +1308,7 @@ class exporter(object):
                     datetime.now() - timedelta(days=self.delta),
                 ),
                 ("order_id.partner_id.id", "!=", 4887),
+                ("order_id.name", "not in", so_to_exclude),
             ]
         )
         so_line = self.generator.getData(
