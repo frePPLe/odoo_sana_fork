@@ -316,9 +316,6 @@ class exporter(object):
             logger.debug("Exporting purchase orders.")
             yield from self.export_purchaseorders()
 
-            logger.debug("Exporting reordering rules.")
-            yield from self.export_orderpoints()
-
             if self.has_expiry:
                 logger.debug("Exporting stock orders.")
                 yield from self.export_stockorders()
