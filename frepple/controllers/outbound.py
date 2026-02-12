@@ -1031,7 +1031,7 @@ class exporter(object):
             "product.supplierinfo",
             fields=supplierinfo_fields,
             search=[("product_tmpl_id", "!=", False)],
-            order="sequence",
+            order="sequence, price, delay",
         ):
             if i["product_tmpl_id"][0] in itemsuppliers:
                 itemsuppliers[i["product_tmpl_id"][0]].append(i)
