@@ -22,43 +22,48 @@
       </field>
     </record>
 
-    <!-- Complete frePPLe UI in purchasing menu. -->
-    <record id="action_frepple_web" model="ir.actions.client">
-      <field name="name">frePPLe user interface</field>
-      <field name="tag">frepple.homepage</field>
-    </record>
-    <menuitem id="menu_frepple_web_procurement" name="Advanced planning - frePPLe" parent="purchase.menu_purchase_root" sequence="110" action="action_frepple_web" groups="frepple_user" />
-
-    <!-- frePPle forecast editor in sales menu. -->
-    <record id="action_frepple_forecast_editor" model="ir.actions.client">
-      <field name="name">Forecast editor - frePPLe</field>
-      <field name="tag">frepple.forecasteditor</field>
-    </record>
-    <menuitem id="menu_frepple_forecast_editor" name="Forecast editor - frePPLe" parent="sale.sale_order_menu" sequence="100" action="action_frepple_forecast_editor" groups="frepple_user" />
-
-    <!-- frePPle inventory planning in inventory menu. -->
-    <record id="action_frepple_inventoryplanning" model="ir.actions.client">
-      <field name="name">Inventory planning - frePPLe</field>
-      <field name="tag">frepple.inventoryplanning</field>
-    </record>
-    <menuitem id="menu_frepple_inventoryplanning" name="Inventory planning - frePPLe" parent="stock.menu_stock_warehouse_mgmt" sequence="100" action="action_frepple_inventoryplanning" groups="frepple_user" />
-
-    <!-- Plan information tab on a sales order. -->
-    <!--
-    <record id="frepple.sales_order_form_frepple" model="ir.ui.view">
-      <field name="name">sale.order.form.frepple.inherit</field>
-      <field name="model">sale.order</field>
-      <field name="inherit_id" ref="sale.view_order_form"/>
-      <field name="priority">55</field>
-      <field name="arch" type="xml">
-        <xpath expr="//notebook" position="inside">
-          <page string="Plan information">
-            <h1>test</h1>
-            <iframe src="http://localhost:8000" width="100%" height="100%" marginwidth="0" marginheight="0" frameborder="no" scrolling="yes" style="border-width:0px;"/>
-          </page>
-        </xpath>
+    <record id="action_frepple_web" model="ir.actions.server">
+      <field name="name">Frepple</field>
+      <field name="model_id" ref="base.model_res_company"/>
+      <field name="state">code</field>
+      <field name="code">
+          action = model.actionOpenFreppleWindow()
       </field>
     </record>
-    -->
+
+    <!-- frePPLe UI in purchasing menu. -->
+  <menuitem
+    id="menu_frepple_root_purchase"
+    name="frePPLe"
+    parent="purchase.menu_purchase_root"
+    sequence="110"
+    groups="frepple_user"/>
+
+    <menuitem
+    id="menu_frepple_web_purchase"
+    name="FrePPLe APS"
+    parent="menu_frepple_root_purchase"
+    action="action_frepple_web"
+    sequence="10"
+    groups="frepple_user"/>
+
+
+
+    <!-- frePPLe UI in sales menu. -->
+    <menuitem
+    id="menu_frepple_root_sales"
+    name="frePPLe"
+    parent="sale.sale_menu_root"
+    sequence="110"
+    groups="frepple_user"/>
+
+    <menuitem
+    id="menu_frepple_web_sales"
+    name="FrePPLe APS"
+    parent="menu_frepple_root_sales"
+    action="action_frepple_web"
+    sequence="10"
+    groups="frepple_user"/>
+
   </data>
 </odoo>

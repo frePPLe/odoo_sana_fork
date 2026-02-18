@@ -66,3 +66,23 @@ class ResCompany(models.Model):
             raise exceptions.UserError("FrePPLe server URL not configured")
         url = "%s%s?webtoken=%s" % (server, _url, webtoken)
         return url
+
+    @api.model
+    def actionOpenFreppleWindow(self):
+        current_company = self.env.company
+        frepple_url = current_company.getFreppleURL(True, "/")
+
+        if not frepple_url:
+            # If the URL is missing, return a notification action
+            return {
+                "type": "ir.actions.client",
+                "tag": "display_notification",
+                "params": {
+                    "title": "Configuration Required",
+                    "message": "Please configure the base URL for Frepple in the company settings.",
+                    "sticky": False,
+                    "type": "warning",
+                },
+            }
+        else:
+            return {"type": "ir.actions.act_url", "url": frepple_url, "target": "new"}
