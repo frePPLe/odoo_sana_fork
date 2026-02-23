@@ -327,7 +327,11 @@ class importer(object):
                             )
                             po = po_line.order_id
                             # set the PO currency
-                            if supplier and supplier.currency_id:
+                            if (
+                                supplier
+                                and supplier.currency_id
+                                and supplier.currency_id.id != po.currency_id.id
+                            ):
                                 po.currency_id = supplier.currency_id.id
 
                             # Is there a blanket order for this product /supplier ?
