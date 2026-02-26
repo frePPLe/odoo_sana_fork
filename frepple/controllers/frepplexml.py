@@ -260,6 +260,20 @@ class XMLController(odoo.http.Controller):
                 headers=[("WWW-Authenticate", 'Basic realm="odoo"')],
             )
 
+        # Authorization: Check if the user is allowed to access the frepple interface
+        current_user = req.env["res.users"].browse(uid)
+        companies_to_check = [company] if company else req.env["res.company"].search([])
+        for comp in companies_to_check:
+            if (
+                comp.frepple_interface_user
+                and comp.frepple_interface_user.id != current_user.id
+            ):
+                logger.warning(
+                    "Unauthorized access attempt by user %s to /frepple/xml"
+                    % current_user.login
+                )
+                return Response("Unauthorized", 401)
+
         # Validate company name
         if company_name and req.env:
             for i in req.env["res.company"].search(

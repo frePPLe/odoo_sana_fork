@@ -47,3 +47,9 @@ class ResConfigSettings(models.TransientModel):
         related="company_id.disclose_stack_trace",
         readonly=False,
     )
+    frepple_interface_user = fields.Many2one(
+        "res.users",
+        "frePPLe interface user",
+        related="company_id.frepple_interface_user",
+        readonly=False,
+    )

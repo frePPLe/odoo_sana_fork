@@ -83,6 +83,16 @@
                            <field name="disclose_stack_trace"/>
                         </div>
                      </div>
+                     <div class="col-12 col-lg-6 o_setting_box" id="frepple_interface_user">
+                        <div class="o_setting_left_pane"/>
+                        <div class="o_setting_right_pane">
+                           <label for="frepple_interface_user"/>
+                           <div class="text-muted">
+                     User allowed to pull data from Odoo into frePPLe
+                           </div>
+                           <field name="frepple_interface_user"/>
+                        </div>
+                     </div>
                   </div>
                </app>
             </xpath>
