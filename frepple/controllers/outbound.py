@@ -1051,7 +1051,9 @@ class exporter(object):
                 "weight",
                 "product_template_attribute_value_ids",
                 "price_extra",
+                "product_replaced_by_id",
             ],
+            search=["|", ("active", "=", True), ("active", "=", False)],
         ):
             if first:
                 yield "<!-- products -->\n"
@@ -1138,6 +1140,10 @@ class exporter(object):
                     else ""
                 ),
             )
+
+            if i.get("product_replaced_by_id"):
+                yield f'<stringproperty name="product_replaced_by_id" value="{i.get("product_replaced_by_id")[0]}"/>\n'
+
             # Export suppliers for the item, if the item is allowed to be purchased
             if tmpl["purchase_ok"]:
                 suppliers = {}
