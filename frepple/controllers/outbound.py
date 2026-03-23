@@ -1063,7 +1063,13 @@ class exporter(object):
                 "price_extra",
                 "product_replaced_by_id",
             ],
-            search=["|", ("active", "=", True), ("active", "=", False)],
+            search=[
+                "|",
+                ("active", "=", True),
+                "&",
+                ("active", "=", False),
+                ("product_replaced_by_id", "!=", False),
+            ],
         ):
             if first:
                 yield "<!-- products -->\n"
