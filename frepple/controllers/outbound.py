@@ -1065,7 +1065,9 @@ class exporter(object):
             ],
             search=[
                 "|",
+                "&",
                 ("active", "=", True),
+                ("product_tmpl_id.purchase_ok", "=", True),
                 "&",
                 ("active", "=", False),
                 ("product_replaced_by_id", "!=", False),
