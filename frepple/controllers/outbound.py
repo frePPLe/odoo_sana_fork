@@ -1065,7 +1065,8 @@ class exporter(object):
             ],
             search=[
                 "|",
-                "&"("product_replaced_by_id", "!=", False),
+                "&",
+                ("product_replaced_by_id", "!=", False),
                 ("active", "in", (True, False)),
                 "&",
                 ("active", "=", True),
