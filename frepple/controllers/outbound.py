@@ -964,7 +964,17 @@ class exporter(object):
                 self.route_mto = k
         for i in self.generator.getData(
             "product.template",
-            search=[("type", "not in", ("service", "consu", "combo"))],
+            search=[
+                "&",
+                (
+                    "type",
+                    "not in",
+                    ("service", "consu", "combo"),
+                ),
+                "|",
+                ("active", "=", True),
+                ("active", "=", False),
+            ],
             fields=[
                 "sale_ok",
                 "purchase_ok",
