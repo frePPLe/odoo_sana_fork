@@ -1297,14 +1297,14 @@ class exporter(object):
         search = (
             [
                 ("product_id", "!=", False),
-                ("order_id.state", "not in", ["draft", "sent"]),
+                ("order_id.state", "not in", ["draft", "sent", "cancel"]),
                 ("order_id.partner_id.id", "!=", 4887),
                 ("order_id.name", "not in", so_to_exclude),
             ]
             if self.delta >= 999
             else [
                 ("product_id", "!=", False),
-                ("order_id.state", "not in", ["draft", "sent"]),
+                ("order_id.state", "not in", ["draft", "sent", "cancel"]),
                 (
                     "write_date",
                     ">=",
