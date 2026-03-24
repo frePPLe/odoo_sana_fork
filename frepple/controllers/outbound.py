@@ -1800,9 +1800,19 @@ class exporter(object):
                     if not supplier:
                         continue
 
-
                     yield '<operationplan reference=%s ordertype="PO" start="%s" end="%s" quantity="%f" status="confirmed">' "<item name=%s/><location name=%s/><supplier name=%s/></operationplan>\n" % (
-                        quoteattr("%s - %s%s" % (j.name, i.id, " (Draft)" if i.order_id.state in ("draft", "sent") else ""),
+                        quoteattr(
+                            "%s - %s%s"
+                            % (
+                                j.name,
+                                i.id,
+                                (
+                                    " (Draft)"
+                                    if i.order_id.state in ("draft", "sent")
+                                    else ""
+                                ),
+                            )
+                        ),
                         start,
                         end,
                         qty,
