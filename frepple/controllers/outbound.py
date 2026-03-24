@@ -1800,23 +1800,9 @@ class exporter(object):
                     if not supplier:
                         continue
 
-                    # MTO links
-                    if (
-                        self.route_mto
-                        in self.product_templates[item["template"]]["route_ids"]
-                    ):
-                        mto_so = i.move_dest_ids.group_id.sale_id
-                        batch = mto_so[0].name if mto_so else None
-                        if not batch:
-                            mto_mo = j._get_mrp_productions()
-                            if mto_mo:
-                                batch = mto_mo[0].display_name
-                    else:
-                        batch = None
 
-                    yield '<operationplan reference=%s %sordertype="PO" start="%s" end="%s" quantity="%f" status="confirmed">' "<item name=%s/><location name=%s/><supplier name=%s/></operationplan>\n" % (
+                    yield '<operationplan reference=%s ordertype="PO" start="%s" end="%s" quantity="%f" status="confirmed">' "<item name=%s/><location name=%s/><supplier name=%s/></operationplan>\n" % (
                         quoteattr("%s - %s%s" % (j.name, i.id, " (Draft)" if i.order_id.state in ("draft", "sent") else ""),
-                        "batch=%s " % quoteattr(batch) if batch else "",
                         start,
                         end,
                         qty,
