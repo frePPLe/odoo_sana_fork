@@ -813,6 +813,8 @@ class exporter(object):
         self.map_customers = {}
         # We also build in the loop the supplier map
         self.map_suppliers = {}
+        # Keep track of the supplier currency
+        self.map_supplier_currency = {}
         first = True
         individual_inserted = False
         offset = 0
@@ -820,7 +822,12 @@ class exporter(object):
         while True:
             recs = self.generator.getData(
                 "res.partner",
-                fields=["name", "parent_id", "is_company"],
+                fields=[
+                    "name",
+                    "parent_id",
+                    "is_company",
+                    "property_purchase_currency_id",
+                ],
                 order="parent_id desc",
                 offset=offset,
                 limit=pagesize,
@@ -864,6 +871,10 @@ class exporter(object):
 
                 self.map_customers[i["id"]] = name
                 self.map_suppliers[i["id"]] = supplier
+                if i["property_purchase_currency_id"]:
+                    self.map_supplier_currency[supplier] = i[
+                        "property_purchase_currency_id"
+                    ][1]
 
         if not first:
             yield "</customers>\n"
@@ -882,9 +893,17 @@ class exporter(object):
                 yield "<!-- suppliers -->\n"
                 yield "<suppliers>\n"
                 first = False
-            yield "<supplier name=%s/>\n" % quoteattr(i)
+            yield "<supplier name=%s>%s</supplier>\n" % (
+                quoteattr(i),
+                (
+                    f'<stringproperty name="currency" value={quoteattr(self.map_supplier_currency[i])}/>\n'
+                    if i in self.map_supplier_currency
+                    else ""
+                ),
+            )
         if not first:
             yield "</suppliers>\n"
+        del self.map_supplier_currency
 
     def export_item_hierarchy(self):
         """
