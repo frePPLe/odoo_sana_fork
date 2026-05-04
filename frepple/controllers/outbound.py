@@ -475,10 +475,10 @@ class exporter(object):
             for usr in self.generator.getData(
                 "res.users",
                 ids=grp["users"],
-                fields=["name", "login", "lang", "company_ids"],
+                fields=["name", "login", "company_ids"],
             ):
                 if not self.singlecompany or self.company_id in usr["company_ids"]:
-                    users.append((usr["name"], usr["login"], usr["lang"]))
+                    users.append((usr["name"], usr["login"]))
         yield '<stringproperty name="users" value=%s/>\n' % quoteattr(json.dumps(users))
 
     def export_calendar(self):
