@@ -1193,7 +1193,9 @@ class exporter(object):
             if tmpl["purchase_ok"]:
                 suppliers = {}
                 sequence = 0
-                for sup in itemsuppliers_product.get(i["id"],itemsuppliers_tmpl.get(tmpl["id"], [])):
+                for sup in itemsuppliers_product.get(
+                    i["id"], itemsuppliers_tmpl.get(tmpl["id"], [])
+                ):
                     sequence += 1
                     name = self.map_suppliers.get(sup["partner_id"][0], None)
                     if not name:
@@ -1972,8 +1974,7 @@ class exporter(object):
         yield "<operationplans>\n"
         if isinstance(self.generator, Odoo_generator):
             # SQL query gives much better performance
-            self.generator.env.cr.execute(
-                """
+            self.generator.env.cr.execute("""
                 SELECT stock_quant.product_id,
                 stock_quant.location_id,
                 sum(stock_quant.quantity) as quantity,
@@ -1992,8 +1993,7 @@ class exporter(object):
                 stock_lot.name,
                 stock_lot.expiration_date
                 ORDER BY location_id ASC
-                """
-            )
+                """)
             data = self.generator.env.cr.fetchall()
         else:
             data = [
