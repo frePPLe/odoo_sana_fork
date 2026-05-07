@@ -302,19 +302,37 @@ class importer(object):
 
                         if (item_id, supplier_id) not in product_supplier_dict:
                             product = product_product.browse(int(item_id))
+                            # look first for a record for that specific variant/product
                             supplier = product_supplierinfo.search(
                                 [
+                                    "&",
                                     ("partner_id", "=", supplier_id),
                                     (
-                                        "product_tmpl_id",
+                                        "product_id",
                                         "=",
-                                        product.product_tmpl_id.id,
+                                        product.id,
                                     ),
                                     ("min_qty", "<=", quantity),
                                 ],
                                 limit=1,
                                 order="min_qty desc",
                             )
+                            # if no record found then move at template level
+                            if not supplier:
+                                supplier = product_supplierinfo.search(
+                                    [
+                                        "&",
+                                        ("partner_id", "=", supplier_id),
+                                        (
+                                            "product_tmpl_id",
+                                            "=",
+                                            product.product_tmpl_id.id,
+                                        ),
+                                        ("min_qty", "<=", quantity),
+                                    ],
+                                    limit=1,
+                                    order="min_qty desc",
+                                )
                             product_uom = uom_uom.browse(int(uom_id))
                             # first create a minimal PO line
                             po_line = proc_orderline.create(
