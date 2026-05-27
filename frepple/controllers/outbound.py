@@ -1115,7 +1115,7 @@ class exporter(object):
                 continue
             tmpl = self.product_templates[i["product_tmpl_id"][0]]
             # generate variant name and description in frepple
-            if i["product_template_attribute_value_ids"]:
+            if i["product_template_variant_value_ids"]:
                 if use_short_names:
                     name = i["code"] or i["name"]
                     description = "%s %s" % (
