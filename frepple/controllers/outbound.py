@@ -1128,7 +1128,7 @@ class exporter(object):
                                 ]
                             )
                             if i["product_template_variant_value_ids"]
-                            else None
+                            else ""
                         ),
                     )
                 else:
