@@ -1176,11 +1176,7 @@ class exporter(object):
             # For make-to-order items the next line needs to XML snippet ' type="item_mto"'.
             yield '<item name=%s %s uom=%s volume="%f" weight="%f" cost="%f" subcategory="%s,%s"%s%s>%s\n' % (
                 quoteattr(name),
-                (
-                    ("description=%s" % (quoteattr(description),))
-                    if use_short_names
-                    else ""
-                ),
+                (("description=%s" % (quoteattr(description),)) if description else ""),
                 quoteattr(tmpl["uom_id"][1]) if tmpl["uom_id"] else "",
                 i["volume"] or 0,
                 i["weight"] or 0,
