@@ -977,6 +977,12 @@ class exporter(object):
         self.routes = {
             i["id"]: i for i in self.generator.getData("stock.route", fields=["name"])
         }
+        variants = {
+            i["id"]: i["display_name"]
+            for i in self.generator.getData(
+                "product.template.attribute.value", fields=["display_name"]
+            )
+        }
         self.route_mto = None
         for k, v in self.routes.items():
             if v["name"] == "Replenish on Order (MTO)":
@@ -1087,6 +1093,7 @@ class exporter(object):
                 "volume",
                 "weight",
                 "product_template_attribute_value_ids",
+                "product_template_variant_value_ids",
                 "price_extra",
                 "product_replaced_by_id",
             ],
@@ -1111,14 +1118,35 @@ class exporter(object):
             if i["product_template_attribute_value_ids"]:
                 if use_short_names:
                     name = i["code"] or i["name"]
-                    description = i["name"]
+                    description = "%s %s" % (
+                        i["name"],
+                        (
+                            ",".join(
+                                [
+                                    variants[i]
+                                    for i in i["product_template_variant_value_ids"]
+                                ]
+                            )
+                            if i["product_template_variant_value_ids"]
+                            else None
+                        ),
+                    )
                 else:
                     name = (
                         (("[%s] %s %s" % (i["code"], i["name"], i["id"])))
                         if i["code"]
                         else "%s %s" % (i["name"], i["id"])
                     )
-                    description = None
+                    description = (
+                        ",".join(
+                            [
+                                variants[i]
+                                for i in i["product_template_variant_value_ids"]
+                            ]
+                        )
+                        if i["product_template_variant_value_ids"]
+                        else None
+                    )
             # generate name and description for non-variant products
             elif i["code"]:
                 name = (
